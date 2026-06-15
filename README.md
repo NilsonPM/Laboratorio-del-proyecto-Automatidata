@@ -1,4 +1,4 @@
-# Proyecto Automatidata — Análisis de Taxis Amarillos de NYC (2017)
+# 🚕 Proyecto Automatidata — Análisis de Taxis Amarillos de NYC (2017)
 
 Este repositorio contiene la fase inicial del proyecto de consultoría de datos desarrollado por **Automatidata** para la **Comisión de Taxis y Limusinas de la Ciudad de Nueva York (NYC TLC)**. El objetivo principal es inspeccionar, limpiar y preparar el conjunto de datos de viajes de taxi del año 2017 para construir un modelo predictivo que estime las tarifas de taxi de manera precisa.
 
@@ -9,8 +9,16 @@ El proyecto está estructurado bajo el marco de resolución de problemas **PACE*
 ## 📋 Estructura del Repositorio
 
 * **[Automatidata_Laboratorio_Python_ES.ipynb](Automatidata_Laboratorio_Python_ES.ipynb)**: Cuaderno de Jupyter estructurado con el código en Python para la exploración, filtrado y primeras estadísticas descriptivas del conjunto de datos.
-* **[2017_Yellow_Taxi_Trip_Data.csv](2017_Yellow_Taxi_Trip_Data.csv)**: Conjunto de datos en formato CSV con 22,699 registros y 18 columnas que detallan los viajes de taxi.
+* **[2017_Yellow_Taxi_Trip_Data.csv](2017_Yellow_Taxi_Trip_Data.csv)**: Conjunto de datos en formato CSV con los registros detallados de los viajes de taxi.
 * **[images/](images/)**: Recursos visuales que ilustran el flujo y las etapas metodológicas de PACE utilizadas en el proyecto.
+
+---
+
+## 🎯 Objetivos del Proyecto
+
+1. **Exploración y Diagnóstico (EDA):** Analizar la calidad de los datos para identificar anomalías operativas y registros con valores incoherentes.
+2. **Análisis de Relaciones:** Investigar cómo se distribuyen las métricas clave (duración, distancia, tarifas y propinas) según el método de pago y el proveedor de servicio.
+3. **Preparación para el Modelado:** Establecer las bases analíticas y la limpieza necesarias para el posterior entrenamiento de un modelo predictivo que estime la tarifa base de los trayectos.
 
 ---
 
@@ -24,8 +32,10 @@ Tras inspeccionar el dataset de 2017, se identificaron los siguientes aspectos r
   * `VendorID 1` (Creative Mobile Technologies): **10,073** viajes (44.4%)
 * **Métodos de Pago (payment_type):**
   * Tarjetas de Crédito (`1`): **15,265** viajes. Promedio de propina de **$2.73**.
-  * Efectivo (`2`): **7,267** viajes. Promedio de propina de **$0.00** *(Nota: Las propinas en efectivo no se registran en los sistemas electrónicos de la TLC)*.
-  * Otros métodos (Sin cargo/Disputas): **167** viajes.
+  * Efectivo (`2`): **7,267** viajes. Promedio de propina de **$0.00**.
+
+> [!NOTE]
+> Las propinas pagadas en efectivo no se registran en los sistemas electrónicos de la TLC. El promedio de propina registrado de $0.00 en efectivo refleja la ausencia de registros de este método y no necesariamente que no se hayan dado propinas.
 
 ---
 
@@ -42,11 +52,24 @@ Para asegurar el **rigor analítico**, se identificaron las siguientes inconsist
 
 ---
 
-## 🚀 Próximos Pasos y Plan de Acción
+## 🛠️ Metodología PACE Aplicada
 
-* **Limpieza de Datos:** Eliminar registros atípicos (tarifas negativas, distancias $\le 0$ y duraciones incoherentes).
-* **Ingeniería de Características:** Convertir las marcas de tiempo (`tpep_pickup_datetime` y `tpep_dropoff_datetime`) a tipos de datos `datetime` para extraer variables temporales de valor como la hora del día, el día de la semana y la duración real en minutos.
-* **Modelado Predictivo:** Utilizar las variables predictoras clave `trip_distance` y la duración estimada del trayecto para predecir la tarifa base (`fare_amount`), excluyendo propinas y peajes opcionales.
+El flujo de trabajo analítico y los próximos pasos del proyecto se estructuran bajo las etapas de PACE:
+
+1. **Plan (Planificar):** Comprender los requerimientos de la NYC TLC para predecir tarifas e identificar las variables disponibles en el conjunto de datos.
+2. **Analyze (Analizar):** Cargar los datos, examinar su completitud y distribuciones estadísticas. Identificar valores atípicos y patrones inconsistentes mediante análisis exploratorio.
+3. **Construct (Construir):**
+   * Limpiar el dataset eliminando los registros atípicos identificados en la etapa de análisis (tarifas negativas, distancias o duraciones nulas o erróneas).
+   * Diseñar características nuevas a partir de variables temporales para calcular duraciones en minutos y segmentación por horarios y días.
+4. **Execute (Ejecutar):** Formular respuestas analíticas del negocio y planificar la creación de modelos de regresión predictivos de tarifas base.
+
+```mermaid
+flowchart TD
+    A[Cargar Datos de Viaje] --> B[Filtrar Inconsistencias y Outliers]
+    B --> C[Procesar Marcas de Tiempo a Datetime]
+    C --> D[Calcular Duración del Trayecto]
+    D --> E[Fase Posterior: Modelado Predictivo]
+```
 
 ---
 
